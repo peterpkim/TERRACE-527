@@ -1,0 +1,7 @@
+{
+  "name": "테라스 527 글램핑 & 펜션_fin",
+  "description": "산정호수의 자연과 함께하는 깨끗하고 친절한 프리미엄 글램핑 & 펜션 테라스 527의 공식 웹사이트입니다.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
