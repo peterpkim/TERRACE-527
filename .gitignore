@@ -7,10 +7,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
 dist
 dist-ssr
+
+# Environment variables
 *.local
+.env
+.env.local
+.env.*.local
 
 # Editor directories and files
 .vscode/*
@@ -22,8 +28,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-scripts/auto-sync.md
-*.ps1
-*.ps1
-GITHUB_SYNC_GUIDE.md
-package.json
+
+# Optional scripts (uncomment if you want to exclude)
+# *.ps1
+# *.sh
+
+# Documentation (optional, can be kept)
+# docs/

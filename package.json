@@ -11,8 +11,6 @@
     "build:test": "npm run build && npm run preview",
     "get-ip": "powershell -ExecutionPolicy Bypass -File ./get-network-ip.ps1",
     "github:upload": "powershell -ExecutionPolicy Bypass -File ./github-upload.ps1",
-    "sync:from": "powershell -ExecutionPolicy Bypass -File ./sync-from-github.ps1",
-    "sync:to": "powershell -ExecutionPolicy Bypass -File ./sync-to-github.ps1",
     "pull": "git pull origin main",
     "push": "git add . && git commit -m \"Update\" && git push origin main"
   },
