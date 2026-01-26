@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+scripts/auto-sync.md
+*.ps1
+*.ps1
+GITHUB_SYNC_GUIDE.md
+package.json
