@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "preview:host": "vite preview --host",
     "build:test": "npm run build && npm run preview",
+    "build:test-script": "powershell -ExecutionPolicy Bypass -File ./build-test.ps1",
     "get-ip": "powershell -ExecutionPolicy Bypass -File ./get-network-ip.ps1",
     "github:upload": "powershell -ExecutionPolicy Bypass -File ./github-upload.ps1",
     "pull": "git pull origin main",

@@ -58,6 +58,6 @@ export default defineConfig(({ mode }) => {
           }
         }
       ],
-      base: './'
+      base: process.env.GITHUB_PAGES === 'true' ? '/terrace-527-homepage-test3/' : './',
     };
 });
