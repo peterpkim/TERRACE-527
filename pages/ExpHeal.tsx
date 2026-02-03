@@ -9,12 +9,12 @@ const EXP_NAV = [
 ];
 
 const PROGRAMS = [
-  { id: 'spa', titleEn: 'Outdoor Hot Spa', titleKo: '온수 스파', concept: '사계절 내내 누리는 따스한 고요', description: '최고급 노천 스파 시스템으로 숲을 마주하며 쌓인 피로를 풀어보세요.', items: ['프라이빗 개별 테라스 스파', '최적의 온열 시스템', '프리미엄 입욕제 제공'], info: { time: '입실 후 ~ 22:00', type: '객실별 유료 옵션' }, icon: <Waves />, image: 'IMAGE/Heal_Prog_01.webp' },
+  { id: 'spa', titleEn: 'Outdoor Hot Spa', titleKo: '온수 스파', concept: '사계절 내내 누리는 따스한 고요', description: '최고급 노천 스파 시스템으로 숲을 마주하며 쌓인 피로를 풀어보세요.', items: ['프라이빗 개별 테라스 스파 장비 제공 (인텍스 퓨어스파)', '야외에서 따듯함을 유지하는 자동 온열 시스템', '프리미엄 입욕제와 감성 조명 & 에탄올 불멍 제공'], info: { time: '입실 후 ~ 22:00', type: '객실별 유료 옵션(사전 예약 필수)' }, icon: <Waves />, image: 'IMAGE/Heal_Prog_01.webp' },
   { id: 'pool', titleEn: 'Groundwater Pool', titleKo: '야외 수영장', concept: '지하 200m 암반수의 청량함', description: '천연 암반수를 사용하여 계곡의 시원함을 그대로 담은 대형 야외 수영장입니다.', items: ['지하 200m 천연 암반수', '7M 대형 아웃도어 풀', '여름 시즌 전용 운영'], info: { time: '10:00 ~ 18:00', type: '투숙객 무료 개방' }, icon: <Droplets />, image: 'IMAGE/Heal_Prog_02.webp' },
   { id: 'valley', titleEn: 'Natural Valley', titleKo: '자연 계곡 이용', concept: '숙소 바로 앞, 1급수의 시원함', description: '테라스 527 입구 바로 앞 청정 계곡. 자연의 소리를 들으며 물놀이를 즐기세요.', items: ['입구 맞은편 도보 1분', '사계절 맑은 1급수 계곡', '자연 그늘막 완비'], info: { time: '상시 이용 가능', type: '자연 무료 이용' }, icon: <Mountain />, image: 'IMAGE/Heal_Prog_03.webp' },
-  { id: 'nature', titleEn: 'Lake Walk', titleKo: '호수 산책', concept: '물안개 피는 새벽의 고요한 산책', description: '도보 5분 거리의 산정호수 둘레길. 사계절의 변화를 가장 가까이서 느껴보세요.', items: ['산정호수 둘레길 인접', '포토스팟 가이드 제공', '조식 전 아침 산책 추천'], info: { time: '일출 ~ 일몰 추천', type: '자연 무료 이용' }, icon: <Map />, image: 'IMAGE/Heal_Prog_04.webp' },
+  { id: 'nature', titleEn: 'Lake Walk', titleKo: '호수 산책', concept: '물안개 피는 새벽의 고요한 산책', description: '차로 3분 거리의 산정호수 둘레길. 사계절의 변화를 가장 가까이서 느껴보세요.', items: ['산정호수 둘레길 인접', '포토스팟 가이드 제공', '조식 전 아침 산책 추천'], info: { time: '일출 ~ 일몰 추천', type: '자연 무료 이용' }, icon: <Map />, image: 'IMAGE/Heal_Prog_04.webp' },
   { id: 'bedding', titleEn: 'Premium Bedding', titleKo: '고급 침구 & 어메니티', concept: '호텔의 안락함을 자연 속으로', description: '최고급 구스 침구와 친환경 어메니티로 완벽한 숙면을 제공합니다.', items: ['프리미엄 구스 이불', '고체 어메니티 세트', '매일 살균 세탁 시스템'], info: { time: '입실 시 비치', type: '전 객실 기본 제공' }, icon: <Bed />, image: 'IMAGE/Heal_Prog_05.webp' },
-  { id: 'heating', titleEn: 'Winter Heating', titleKo: '겨울철 난방 완비', concept: '한겨울에도 훈훈한 글램핑', description: '바닥 난방과 온풍기, 등유 난로까지 3중 난방 시스템으로 겨울 캠핑 걱정 없습니다.', items: ['전 객실 바닥 난방', '에어컨/온풍기 겸용', '등유 난로 대여 가능'], info: { time: '사계절 상시', type: '전 객실 기본 완비' }, icon: <ThermometerSun />, image: 'IMAGE/Heal_Prog_06.webp' },
+  { id: 'heating', titleEn: 'Winter Heating', titleKo: '겨울철 난방 완비', concept: '한겨울에도 훈훈한 글램핑', description: '최신 바닥 난방과 온풍기, 온수까지 3중 난방 시스템으로 겨울 캠핑 걱정 없습니다.', items: ['전 객실 바닥 난방', '에어컨/온풍기 겸용', '추가 전기 난로 대여 가능'], info: { time: '사계절 상시', type: '전 객실 기본 완비' }, icon: <ThermometerSun />, image: 'IMAGE/Heal_Prog_06.webp' },
 ];
 
 const ProgramBlock: React.FC<any> = ({ titleEn, titleKo, concept, description, items, info, icon, image }) => (
@@ -74,10 +74,10 @@ const ExpHeal: React.FC = () => {
 
       {/* Sub Nav */}
       <nav className="sticky top-20 bg-white/95 backdrop-blur-md z-40 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 overflow-x-auto scrollbar-hide">
-          <div className="flex justify-start md:justify-center items-center min-w-max h-16 gap-8 md:gap-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:flex md:justify-center md:flex-row items-stretch gap-0 md:gap-8 py-2 md:py-0 min-h-[4.5rem] md:h-16 md:min-h-0">
             {EXP_NAV.map((nav) => (
-              <Link key={nav.path} to={nav.path} className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-all whitespace-nowrap border-b-2 py-5 ${location.pathname === nav.path ? 'border-emerald-900 text-emerald-950' : 'border-transparent text-gray-400 hover:text-emerald-800'}`}>{nav.name}</Link>
+              <Link key={nav.path} to={nav.path} className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-all border-b-2 py-4 md:py-5 flex items-center justify-center text-center md:whitespace-nowrap ${location.pathname === nav.path ? 'border-emerald-900 text-emerald-950' : 'border-transparent text-gray-400 hover:text-emerald-800'}`}>{nav.name}</Link>
             ))}
           </div>
         </div>

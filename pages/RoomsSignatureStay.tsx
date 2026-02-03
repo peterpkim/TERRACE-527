@@ -38,13 +38,13 @@ const RoomsSignatureStay: React.FC = () => {
   return (
     <div className="w-full bg-white">
       <nav className="sticky top-20 bg-white/80 backdrop-blur-md z-40 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 overflow-x-auto scrollbar-hide">
-          <div className="flex justify-start md:justify-center items-center min-w-max h-16 gap-8">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:flex md:justify-center md:flex-row items-stretch gap-0 md:gap-8 py-2 md:py-0 min-h-[4.5rem] md:h-16 md:min-h-0">
             {ROOM_NAV.map((nav) => (
               <Link
                 key={nav.path}
                 to={nav.path}
-                className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-all whitespace-nowrap border-b-2 py-5 ${
+                className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-all border-b-2 py-4 md:py-5 flex items-center justify-center text-center md:whitespace-nowrap ${
                   location.pathname === nav.path 
                   ? 'border-green-900 text-green-950' 
                   : 'border-transparent text-gray-400 hover:text-green-800'
@@ -100,7 +100,7 @@ const RoomsSignatureStay: React.FC = () => {
             <div className="space-y-8">
               <h2 className="text-2xl font-bold serif tracking-tight">공간의 정수</h2>
               <p className="text-sm text-gray-500 leading-relaxed font-light break-keep">
-                통창으로 비치는 산정호수의 사계절이 인테리어의 완성이 됩니다. 독채형 구조의 프라이버시와 정제된 디자인으로 당신의 스테이를 완성하십시오.
+                복층 구조의 넉넉한 공간감, 개별 야외 BBQ, 정제된 디자인으로 당신의 스테이를 완성하세요. 창에 비친 자연의 사계절은 인테리어의 완성이 됩니다.
               </p>
               <div className="flex gap-12 border-y border-gray-100 py-8">
                 <div className="flex flex-col">

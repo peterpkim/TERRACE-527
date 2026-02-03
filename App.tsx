@@ -206,7 +206,7 @@ const Footer = () => (
           <span className="text-[9px] tracking-[0.2em] text-gray-400 font-bold uppercase mt-1">Glamping & Stay Resort</span>
         </div>
         <p className="text-sm text-gray-400 leading-relaxed font-medium max-w-xs">
-          산정호수의 고요함 속에서 진정한 쉼을 제안합니다. 유난히 깨끗하고 정말 친절한 공간, 테라스 527입니다.
+          산정호수의 고요함 속에서 진정한 쉼을 제안합니다. 테라스 527
         </p>
         <div className="flex items-center gap-5 pt-2">
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-emerald-50 hover:text-emerald-900 transition-all border border-gray-100 shadow-sm" aria-label="Instagram">

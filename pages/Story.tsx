@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router';
-import { Sparkles, ArrowRight, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
+import { Sparkles, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface EvidenceSlide {
   text: string;
@@ -276,11 +276,6 @@ const Story: React.FC = () => {
                   <p className="text-gray-700 text-base md:text-lg leading-relaxed font-light break-keep max-w-md">
                     {value.description}
                   </p>
-                  <div className="pt-4">
-                    <div className="inline-flex items-center gap-3 text-[11px] font-bold text-gray-500 tracking-[0.2em] uppercase">
-                       <ImageIcon size={14} /> 우리가 준비한 정성
-                    </div>
-                  </div>
                 </div>
 
                 {/* Evidence Slider (Visual Records) */}

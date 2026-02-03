@@ -9,12 +9,12 @@ const EXP_NAV = [
 ];
 
 const PROGRAMS = [
-  { id: 'revisit', titleEn: 'Re-visit Benefit', titleKo: '재방문 혜택', concept: '다시 찾아주신 소중한 분들을 위한 예우', description: '테라스 527을 다시 찾아주시는 고객님께 특별한 혜택을 드립니다.', items: ['재방문 시 숙박료 할인', '웰컴 드링크 서비스', '우선 예약 권한 부여'], info: { time: '상시 적용', type: '재방문 한정 혜택' }, icon: <Crown />, image: 'IMAGE/Serv_Prog_01.webp' },
-  { id: 'longstay', titleEn: 'Camping Site', titleKo: '장박용 캠핑 사이트', concept: '나만의 아지트를 산정호수에', description: '캠핑 장비를 두고 여유롭게 산정호수를 즐길 수 있는 장박 전용 사이트입니다.', items: ['여유로운 사이트 공간', '전용 배전함 및 수도', '장기 계약 특별가'], info: { time: '시즌 협의', type: '장박 전용 상품' }, icon: <Tent />, image: 'IMAGE/Serv_Prog_02.webp' },
+  { id: 'revisit', titleEn: 'Re-visit Benefit', titleKo: '재방문 혜택', concept: '다시 찾아주신 소중한 분들을 위한 예우', description: '테라스 527을 다시 찾아주시는 고객님께 특별한 혜택을 드립니다.', items: ['재방문 시 숙박료 할인', '웰컴백 무료 서비스', '우선 예약 권한 부여'], info: { time: '상시 적용', type: '방문 전 별도 문의' }, icon: <Crown />, image: 'IMAGE/Serv_Prog_01.webp' },
+  { id: 'longstay', titleEn: 'Camping Site', titleKo: '장박용 캠핑 사이트', concept: '나만의 아지트를 산정호수에', description: '캠핑 장비를 두고 여유롭게 산정호수를 즐길 수 있는 장박 전용 사이트입니다.', items: ['여유로운 사이트 공간', '전용 배전함, 공용 샤워장, 탕비실 완비', '장기 계약 특별가'], info: { time: '사전 협의', type: '장박 전용 상품' }, icon: <Tent />, image: 'IMAGE/Serv_Prog_02.webp' },
   { id: 'lounge', titleEn: '24H Lounge', titleKo: '24시 라운지', concept: '한강 라면 기기와 함께하는 휴게 공간', description: '언제든 열려있는 휴게 공간입니다.', items: ['한강 즉석 라면 기기 완비', '프리미엄 캡슐 커피 머신', '24시간 무인 운영'], info: { time: '24시간 운영', type: '자유 이용/유료 구매' }, icon: <Coffee />, image: 'IMAGE/Serv_Prog_03.webp' },
   { id: 'smartorder', titleEn: 'Smart Order', titleKo: '스마트 오더', concept: '문 앞까지 배달되는 편리함', description: '객실 내 QR코드로 바비큐 세트부터 소모품까지 비대면 주문하세요.', items: ['전 객실 QR 주문 시스템', '비대면 문앞 배송', '실시간 주문 현황 확인'], info: { time: '10:00 ~ 21:00', type: '투숙객 전용 서비스' }, icon: <QrCode />, image: 'IMAGE/Serv_Prog_04.webp' },
   { id: 'seminar', titleEn: 'Corporate Group', titleKo: '기업 및 단체 대관', concept: '비즈니스와 휴식의 완벽한 밸런스', description: '단체 고객을 위한 전체 대관과 맞춤형 워크숍 프로그램을 지원합니다.', items: ['전체 객실 일괄 대관', '대형 세미나 공간 지원', '단체 바비큐 패키지'], info: { time: '사전 협의', type: '단체 전용 서비스' }, icon: <Users />, image: 'IMAGE/Serv_Prog_05.webp' },
-  { id: 'flexcheck', titleEn: 'Late Check-out', titleKo: '레이트 체크아웃', concept: '일정에 맞춘 유연한 머무름의 확장', description: '조금 더 늦게 떠나고 싶을 때 이용하세요.', items: ['최대 14:00까지 연장', '당일 상황에 따라 신청', '시간당 추가 요금 발생'], info: { time: '퇴실 당일 신청', type: '유료 옵션' }, icon: <Clock />, image: 'IMAGE/Serv_Prog_06.webp' },
+  { id: 'flexcheck', titleEn: 'Late Check-out', titleKo: '레이트 체크아웃', concept: '일정에 맞춘 유연한 머무름의 확장', description: '조금 더 늦게 떠나고 싶을 때 이용하세요.', items: ['최대 13:00까지 연장', '수영장, 스파 등 부대 시설 추가 이용', '예약 상황에 따라 가능 여부 확인'], info: { time: '입실 당일 사전 신청', type: '유료 옵션' }, icon: <Clock />, image: 'IMAGE/Serv_Prog_06.webp' },
 ];
 
 const ProgramBlock: React.FC<any> = ({ titleEn, titleKo, concept, description, items, info, icon, image }) => (
@@ -74,10 +74,10 @@ const ExpService: React.FC = () => {
 
       {/* Sub Nav */}
       <nav className="sticky top-20 bg-white/95 backdrop-blur-md z-40 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 overflow-x-auto scrollbar-hide">
-          <div className="flex justify-start md:justify-center items-center min-w-max h-16 gap-8 md:gap-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:flex md:justify-center md:flex-row items-stretch gap-0 md:gap-8 py-2 md:py-0 min-h-[4.5rem] md:h-16 md:min-h-0">
             {EXP_NAV.map((nav) => (
-              <Link key={nav.path} to={nav.path} className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-all whitespace-nowrap border-b-2 py-5 ${location.pathname === nav.path ? 'border-amber-900 text-amber-950' : 'border-transparent text-gray-400 hover:text-amber-800'}`}>{nav.name}</Link>
+              <Link key={nav.path} to={nav.path} className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-all border-b-2 py-4 md:py-5 flex items-center justify-center text-center md:whitespace-nowrap ${location.pathname === nav.path ? 'border-amber-900 text-amber-950' : 'border-transparent text-gray-400 hover:text-amber-800'}`}>{nav.name}</Link>
             ))}
           </div>
         </div>
