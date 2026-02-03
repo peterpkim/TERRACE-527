@@ -10,7 +10,7 @@ import { Calendar, Phone, MessageSquare, ExternalLink, QrCode, Plus, Minus, Info
 const BOOKING_DATA = {
   naverBookingUrl: "https://booking.naver.com", // # 네이버 예약 바로가기 링크
   kakaoUrl: "https://pf.kakao.com", // # 카카오톡 상담 채널 링크
-  phone: "010-0000-0000",
+  phone: "010-4368-5179",
   smartOrder: {
     title: "투숙객 전용 스마트 오더",
     description: "객실마다 비치된 QR 코드를 스캔하시면 바베큐 세트, 장작, 추가 소모품을 스마트폰으로 편리하게 주문하실 수 있습니다. (현재 시범 운영 중)",

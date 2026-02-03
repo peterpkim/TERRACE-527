@@ -7,8 +7,13 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
       server: {
-        port: 3000,
+        port: 80,
         host: '0.0.0.0',
+        allowedHosts: [
+          'kathie-nonentertaining-sergio.ngrok-free.dev',
+          '.ngrok-free.dev',
+          '.ngrok.io',
+        ],
       },
       preview: {
         port: 4173,
@@ -58,6 +63,8 @@ export default defineConfig(({ mode }) => {
           }
         }
       ],
-      base: process.env.GITHUB_PAGES === 'true' ? '/terrace-527-homepage-test3/' : './',
+      base: process.env.GITHUB_PAGES === 'true' && process.env.GITHUB_REPOSITORY_NAME 
+        ? `/${process.env.GITHUB_REPOSITORY_NAME}/` 
+        : './',
     };
 });

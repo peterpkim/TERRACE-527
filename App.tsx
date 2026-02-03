@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, MessageSquare, Calendar, ChevronDown, Instagram, PenTool, ArrowRight } from 'lucide-react';
 import Home from './pages/Home.tsx';
@@ -15,6 +15,14 @@ import RoomsSignatureGlamping from './pages/RoomsSignatureGlamping.tsx';
 import RoomsClassicStay from './pages/RoomsClassicStay.tsx';
 import RoomsSignatureStay from './pages/RoomsSignatureStay.tsx';
 import EventPopup from './components/EventPopup.tsx';
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -213,18 +221,23 @@ const Footer = () => (
         </div>
       </div>
       <div className="space-y-4 text-[13px] text-gray-500">
-        <p><strong>대표</strong> 홍길동</p>
-        <p><strong>주소</strong> 경기도 포천시 영북면 산정호수로 527</p>
-        <p><strong>사업자번호</strong> 000-00-00000</p>
+        <p><strong>대표</strong> 김종명</p>
+        <p><strong>주소</strong> 경기도 포천시 영북면 산정호수로 529</p>
+        <p><strong>사업자번호</strong> 467-52-00594</p>
+        <p><strong>연락처</strong> 010-4368-5179</p>
       </div>
-      <div className="space-y-4 text-[13px] text-gray-500">
-        <p><strong>고객센터</strong> 010-0000-0000</p>
-        <p><strong>은행정보</strong> 농협 000-0000-0000-00 (예금주: 홍길동)</p>
-        <Link to="/notice" className="text-red-500 font-bold hover:underline">이용약관 및 환불규정 →</Link>
+      <div className="space-y-3">
+        <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-4">Menu</p>
+        <nav className="flex flex-col gap-3">
+          <Link to="/" className="text-[13px] font-semibold text-gray-600 hover:text-emerald-800 transition-colors">HOME</Link>
+          <Link to="/story" className="text-[13px] font-semibold text-gray-600 hover:text-emerald-800 transition-colors">STORY</Link>
+          <Link to="/rooms/classic-glamping" className="text-[13px] font-semibold text-gray-600 hover:text-emerald-800 transition-colors">ROOM</Link>
+          <Link to="/experience/heal" className="text-[13px] font-semibold text-gray-600 hover:text-emerald-800 transition-colors">EXPERIENCE</Link>
+        </nav>
       </div>
     </div>
     <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-gray-50 text-[10px] text-gray-400 font-semibold tracking-widest text-center uppercase">
-      &copy; 2024 TERRACE 527. ALL RIGHTS RESERVED.
+      &copy; 2026 TERRACE 527. ALL RIGHTS RESERVED.
     </div>
   </footer>
 );
@@ -233,6 +246,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
+        <ScrollToTop />
         <EventPopup />
         <Navbar />
         <main className="flex-grow pt-20">

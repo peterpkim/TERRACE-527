@@ -27,6 +27,7 @@ if (Test-Path "dist") {
 # 3. 빌드 실행
 Write-Host "[3/4] 빌드 실행 중..." -ForegroundColor Yellow
 $env:GITHUB_PAGES = "true"
+$env:GITHUB_REPOSITORY_NAME = "terrace-527-homepage-test3"
 npm run build
 
 if ($LASTEXITCODE -ne 0) {

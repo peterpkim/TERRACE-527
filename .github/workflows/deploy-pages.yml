@@ -36,6 +36,7 @@ jobs:
           VITE_NAVER_MAP_CLIENT_ID: ${{ secrets.VITE_NAVER_MAP_CLIENT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GITHUB_PAGES: 'true'
+          GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
         run: npm run build
 
       - name: Setup Pages

@@ -22,6 +22,9 @@ const HERO_IMAGES = [
   'IMAGE/Hero_05.webp'
 ];
 
+// 테라스 527 실제 주소: 경기도 포천시 영북면 산정호수로 529
+const TERRACE_527_COORDS = { lat: 38.0571123, lng: 127.3217751 };
+
 const EXPERIENCE_ITEMS = [
   {
     badge: "Exclusive Package",
@@ -60,13 +63,22 @@ const EXPERIENCE_ITEMS = [
   }
 ];
 
+const CARD_WIDTH = 320;
+const CARD_GAP = 32;
+const EXP_STEP = CARD_WIDTH + CARD_GAP;
+const EXP_SET_SIZE = 5;
+const EXP_REPEAT = 5;
+const EXP_MIDDLE_START = EXP_STEP * EXP_SET_SIZE;
+
 const Home: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [mapStatus, setMapStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  const [experienceIndex, setExperienceIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const mapElement = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<any>(null);
   const isMapInitialized = useRef(false);
+  const expScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -176,70 +188,34 @@ const Home: React.FC = () => {
           
           try {
             const naver = (window as any).naver;
-            if (naver && naver.maps) {
-              const terraceCoords = new naver.maps.LatLng(38.0571123, 127.3217751);
-              const mapOptions = {
-                center: terraceCoords,
-                zoom: 16,
-                zoomControl: true,
-                zoomControlOptions: { position: naver.maps.Position.TOP_RIGHT },
-                scrollWheel: false
-              };
-              
-              // 지도 인스턴스 생성
-              let map;
-              try {
-                map = new naver.maps.Map(mapElement.current, mapOptions);
-                mapInstance.current = map;
-              } catch (mapError: any) {
-                console.error('지도 생성 오류:', mapError);
-                // 인증 오류인 경우
-                if (mapError.message && mapError.message.includes('인증')) {
-                  throw new Error('네이버 지도 API 인증 실패. 네이버 클라우드 플랫폼에서 서비스 URL을 등록했는지 확인해주세요.');
-                }
-                throw mapError;
-              }
-              
-              const marker = new naver.maps.Marker({ position: terraceCoords, map: map, title: '테라스 527' });
-              const infoWindow = new naver.maps.InfoWindow({
-                content: `
-                  <div style="padding:15px; min-width:180px; background:#fff; border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                    <h4 style="margin:0 0 5px 0; font-family:'Pretendard',sans-serif; font-weight:700; color:#064e3b; font-size:14px;">테라스 527</h4>
-                    <p style="margin:0; font-size:11px; color:#666; line-height:1.4;">경기도 포천시 산정호수로 529</p>
-                  </div>
-                `,
-                backgroundColor: "transparent", borderWidth: 0, disableAnchor: false
+            if (naver && naver.maps && mapElement.current) {
+              // 네이버 지도 가이드 예제 패턴 적용 - 테라스 527 실제 주소 좌표
+              const position = new naver.maps.LatLng(TERRACE_527_COORDS.lat, TERRACE_527_COORDS.lng);
+
+              const map = new naver.maps.Map(mapElement.current, {
+                center: position,
+                zoom: 15
               });
-              
-              naver.maps.Event.addListener(marker, "click", () => infoWindow.open(map, marker));
-              infoWindow.open(map, marker);
-              
-              // 지도가 완전히 렌더링될 때까지 대기 후 resize 트리거
-              const triggerResize = () => {
-                if (mapInstance.current && mapElement.current) {
-                  try {
-                    naver.maps.Event.trigger(mapInstance.current, 'resize');
-                    // 지도가 실제로 렌더링되었는지 확인
-                    const mapDiv = mapElement.current.querySelector('div[class*="naver"]') || mapElement.current;
-                    if (mapDiv && mapDiv.offsetWidth > 0) {
-                      isMapInitialized.current = true;
-                      setMapStatus('success');
-                    }
-                  } catch (e) {
-                    console.error('지도 resize 오류:', e);
-                  }
-                }
-              };
-              
-              // 여러 시점에서 resize 트리거
-              setTimeout(triggerResize, 100);
-              setTimeout(triggerResize, 300);
-              setTimeout(triggerResize, 500);
-              setTimeout(triggerResize, 1000);
-              
-              // 초기 상태 설정
+
+              const marker = new naver.maps.Marker({
+                position: position,
+                map: map
+              });
+
+              mapInstance.current = map;
               isMapInitialized.current = true;
               setMapStatus('success');
+
+              // 지도 렌더 후 resize 트리거 (React 컨테이너 대응)
+              const triggerResize = () => {
+                if (mapInstance.current) {
+                  try {
+                    naver.maps.Event.trigger(mapInstance.current, 'resize');
+                  } catch (_e) {}
+                }
+              };
+              setTimeout(triggerResize, 100);
+              setTimeout(triggerResize, 500);
             } else {
               setMapStatus('error');
             }
@@ -325,13 +301,39 @@ const Home: React.FC = () => {
   };
 
   const scrollExperience = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const container = scrollContainerRef.current;
-      const cardWidth = 320; 
-      const scrollAmount = direction === 'left' ? -(cardWidth + 32) : (cardWidth + 32);
-      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const amount = direction === 'right' ? EXP_STEP : -EXP_STEP;
+    el.scrollBy({ left: amount, behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    const setInitialScroll = () => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft = EXP_MIDDLE_START;
+      }
+    };
+    setInitialScroll();
+    const t = setTimeout(setInitialScroll, 100);
+    return () => clearTimeout(t);
+  }, []);
+
+  const handleExperienceScroll = () => {
+    if (expScrollTimeoutRef.current) clearTimeout(expScrollTimeoutRef.current);
+    expScrollTimeoutRef.current = setTimeout(() => {
+      const el = scrollContainerRef.current;
+      if (!el) return;
+      const cardIndex = Math.round(el.scrollLeft / EXP_STEP);
+      setExperienceIndex((cardIndex % EXP_SET_SIZE + EXP_SET_SIZE) % EXP_SET_SIZE);
+      expScrollTimeoutRef.current = null;
+    }, 100);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (expScrollTimeoutRef.current) clearTimeout(expScrollTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <div className="w-full bg-stone-50 text-stone-800 antialiased selection:bg-emerald-900 selection:text-white">
@@ -469,17 +471,28 @@ const Home: React.FC = () => {
             <button onClick={() => scrollExperience('right')} className="w-12 h-12 rounded-full border border-stone-700 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 shadow-lg"><ChevronRight size={20} strokeWidth={1.5} /></button>
           </div>
         </div>
-        <div ref={scrollContainerRef} className="w-full overflow-x-auto scrollbar-hide scroll-smooth pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
-          <div className="flex gap-8 pb-4 min-w-max pr-6 md:pr-12">
-            {EXPERIENCE_ITEMS.map((item, idx) => (
-              <Link key={idx} to={item.link} className="group w-[320px] flex flex-col">
-                <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden mb-8 shadow-2xl">
-                  <img src={item.image} alt={item.titleKo} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
-                  <div className="absolute top-6 left-6"><span className="bg-[#f5f2e8]/90 text-[9px] font-bold tracking-[0.2em] text-gray-900 px-4 py-1.5 rounded-full uppercase">{item.badge}</span></div>
-                </div>
-                <div className="px-2"><h3 className="text-xl font-bold serif text-[#f5f2e8] mb-3">{item.titleKo}</h3><p className="text-stone-500 text-xs font-light leading-relaxed break-keep">{item.description}</p></div>
-              </Link>
-            ))}
+        <div
+          ref={scrollContainerRef}
+          onScroll={handleExperienceScroll}
+          className="w-full overflow-x-auto scrollbar-hide scroll-smooth pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
+        >
+          <div className="flex gap-8 pb-4 min-w-max pr-6 md:pr-12" style={{ gap: CARD_GAP }}>
+            {Array.from({ length: EXP_REPEAT }).map((_, setIdx) =>
+              EXPERIENCE_ITEMS.map((item, idx) => (
+                <Link
+                  key={`exp-${setIdx}-${idx}`}
+                  to={item.link}
+                  className="group flex flex-col shrink-0"
+                  style={{ width: CARD_WIDTH }}
+                >
+                  <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden mb-8 shadow-2xl">
+                    <img src={item.image} alt={item.titleKo} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div className="absolute top-6 left-6"><span className="bg-[#f5f2e8]/90 text-[9px] font-bold tracking-[0.2em] text-gray-900 px-4 py-1.5 rounded-full uppercase">{item.badge}</span></div>
+                  </div>
+                  <div className="px-2"><h3 className="text-xl font-bold serif text-[#f5f2e8] mb-3">{item.titleKo}</h3><p className="text-stone-500 text-xs font-light leading-relaxed break-keep">{item.description}</p></div>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -509,6 +522,7 @@ const Home: React.FC = () => {
                     <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto shadow-2xl text-emerald-900 group-hover/map:scale-110 transition-transform"><MapPin size={40} /></div>
                     <div className="space-y-3">
                       <h4 className="text-xl font-bold text-stone-900 serif">산정호수, 테라스 527</h4>
+                      <p className="text-xs text-stone-500 font-medium">경기도 포천시 영북면 산정호수로 529</p>
                       <p className="text-sm text-stone-500 font-light leading-relaxed break-keep">지도가 표시되지 않을 경우 클릭해 주세요.<br/>네이버 맵에서 위치를 직접 확인하실 수 있습니다.</p>
                       <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                         <p className="text-xs text-yellow-800 font-medium">💡 인증 오류가 발생한 경우:</p>

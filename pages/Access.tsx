@@ -3,10 +3,10 @@ import React from 'react';
 import { MapPin, Phone, MessageSquare, Bus, Car } from 'lucide-react';
 
 const ACCESS_DATA = {
-  address: "경기도 포천시 영북면 산정호수로 527",
+  address: "경기도 포천시 영북면 산정호수로 529",
   naverMapUrl: "https://map.naver.com",
   googleMapUrl: "https://maps.google.com",
-  contact: { phone: "010-0000-0000", kakao: "테라스 527 채널", kakaoUrl: "https://pf.kakao.com" },
+  contact: { phone: "010-4368-5179", kakao: "테라스 527 채널", kakaoUrl: "https://pf.kakao.com" },
   methods: { car: "포천 산정호수 하동 주차장 방면으로 오시면 입구에 테라스 527 간판이 보입니다.", bus: "운천 시외버스터미널에서 택시 이용 시 약 15분 소요됩니다." },
   checkInSteps: ["주차장 도착 후 관리동 방문", "예약 확인 및 이용 안내 (10분 소요)", "객실 열쇠 및 소모품 수령 후 입실"]
 };
