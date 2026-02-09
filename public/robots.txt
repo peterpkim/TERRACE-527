@@ -1,0 +1,12 @@
+# robots.txt for Terrace 527 (Naver Webmaster Guide compliant)
+# Must be at site root; served as text/plain. 2xx response = rules applied.
+
+User-agent: *
+Allow: /
+
+# Naver search robot (Yeti) - same allow rule
+User-agent: Yeti
+Allow: /
+
+# Sitemap: uncomment and set your live site URL (e.g. GitHub Pages or custom domain)
+# Sitemap: https://yourusername.github.io/REPO_NAME/sitemap.xml

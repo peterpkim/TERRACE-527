@@ -43,23 +43,26 @@ export default defineConfig(({ mode }) => {
             }
           }
         },
-        copyPublicDir: false
+        copyPublicDir: true
       },
-      publicDir: false,
+      publicDir: 'public',
       plugins: [
         react(),
         {
-          name: 'copy-image-folder',
+          name: 'copy-assets',
           closeBundle() {
-            const srcDir = path.resolve(__dirname, 'IMAGE');
-            const destDir = path.resolve(__dirname, 'dist', 'IMAGE');
-            if (existsSync(srcDir)) {
-              try {
-                cpSync(srcDir, destDir, { recursive: true });
-              } catch (e) {
-                console.error('Failed to copy IMAGE folder:', e);
+            const copyDir = (src: string, dest: string) => {
+              const srcDir = path.resolve(__dirname, src);
+              const destDir = path.resolve(__dirname, 'dist', dest);
+              if (existsSync(srcDir)) {
+                try {
+                  cpSync(srcDir, destDir, { recursive: true });
+                } catch (e) {
+                  console.error(`Failed to copy ${src}:`, e);
+                }
               }
-            }
+            };
+            copyDir('IMAGE', 'IMAGE');
           }
         }
       ],

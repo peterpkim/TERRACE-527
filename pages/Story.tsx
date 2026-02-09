@@ -51,7 +51,7 @@ const EvidenceSlider: React.FC<{ slides: EvidenceSlide[] }> = ({ slides }) => {
           key={index}
           className={`absolute inset-0 transition-opacity duration-1000 ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
         >
-          <img src={slide.image} className="w-full h-full object-cover filter saturate-[1.1] contrast-[1.05]" alt="" />
+          <img src={slide.image} className="w-full h-full object-cover filter saturate-[1.1] contrast-[1.05]" alt="" loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent flex flex-col justify-end p-8">
             <p className={`text-white drop-shadow-lg text-sm md:text-base font-medium leading-relaxed transition-all duration-700 ${index === currentIndex ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
               {slide.text}
@@ -73,16 +73,39 @@ const EvidenceSlider: React.FC<{ slides: EvidenceSlide[] }> = ({ slides }) => {
   );
 };
 
+const STORY_FETCH_TIMEOUT_MS = 8000;
+
 const Story: React.FC = () => {
   const [data, setData] = useState<StoryData | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    fetch('/data/story.json')
-      .then(res => res.json())
-      .then(setData)
-      .catch(err => console.error("Story data load failed:", err));
+    const base = typeof import.meta !== 'undefined' && import.meta.env?.BASE_URL ? import.meta.env.BASE_URL : '';
+    const url = `${base}data/story.json`.replace(/\/+/g, '/');
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), STORY_FETCH_TIMEOUT_MS);
+
+    fetch(url, { signal: controller.signal })
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((json: StoryData) => {
+        setData(json);
+        setLoadError(null);
+      })
+      .catch(err => {
+        if (err?.name !== 'AbortError') console.error('Story data load failed:', err);
+        setLoadError(err?.message || '데이터를 불러오지 못했습니다.');
+      })
+      .finally(() => clearTimeout(timeoutId));
+
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
   }, []);
 
   // Scroll-Driven Animations with IntersectionObserver
@@ -129,11 +152,30 @@ const Story: React.FC = () => {
     }
   };
 
-  if (!data) return (
-    <div className="h-screen bg-gradient-to-b from-slate-100 to-white flex items-center justify-center">
-      <div className="w-8 h-8 border-2 border-emerald-600/20 border-t-emerald-600 animate-spin rounded-full"></div>
-    </div>
-  );
+  if (loadError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-100 to-white flex items-center justify-center px-6">
+        <div className="text-center max-w-md">
+          <p className="text-gray-600 mb-4">{loadError}</p>
+          <button
+            type="button"
+            onClick={() => { setLoadError(null); setData(null); window.location.reload(); }}
+            className="px-6 py-3 bg-emerald-700 text-white rounded-full text-sm font-medium hover:bg-emerald-800"
+          >
+            새로고침
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="h-screen bg-gradient-to-b from-slate-100 to-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-emerald-600/20 border-t-emerald-600 animate-spin rounded-full" aria-hidden />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-white text-gray-900 selection:bg-emerald-900/20 relative overflow-hidden">
@@ -146,9 +188,9 @@ const Story: React.FC = () => {
             src={data.hero.backgroundImage} 
             className="w-full h-full object-cover" 
             alt="Terrace 527" 
-            style={{ 
-              objectPosition: 'center top',
-            }}
+            fetchPriority="high"
+            decoding="async"
+            style={{ objectPosition: 'center top' }}
           />
           {/* 하단으로 갈수록 흰색으로 자연스럽게 전환되는 그라데이션 - Philosophy 섹션까지 적용 */}
           <div 
