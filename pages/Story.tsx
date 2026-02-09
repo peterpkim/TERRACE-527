@@ -1,7 +1,7 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { Sparkles, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import storyDataJson from '../data/story.json';
 
 interface EvidenceSlide {
   text: string;
@@ -73,44 +73,14 @@ const EvidenceSlider: React.FC<{ slides: EvidenceSlide[] }> = ({ slides }) => {
   );
 };
 
-const STORY_FETCH_TIMEOUT_MS = 8000;
+const data = storyDataJson as StoryData;
 
 const Story: React.FC = () => {
-  const [data, setData] = useState<StoryData | null>(null);
-  const [loadError, setLoadError] = useState<string | null>(null);
   const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
 
-  useEffect(() => {
-    const base = typeof import.meta !== 'undefined' && import.meta.env?.BASE_URL ? import.meta.env.BASE_URL : '';
-    const url = `${base}data/story.json`.replace(/\/+/g, '/');
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), STORY_FETCH_TIMEOUT_MS);
-
-    fetch(url, { signal: controller.signal })
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((json: StoryData) => {
-        setData(json);
-        setLoadError(null);
-      })
-      .catch(err => {
-        if (err?.name !== 'AbortError') console.error('Story data load failed:', err);
-        setLoadError(err?.message || '데이터를 불러오지 못했습니다.');
-      })
-      .finally(() => clearTimeout(timeoutId));
-
-    return () => {
-      clearTimeout(timeoutId);
-      controller.abort();
-    };
-  }, []);
-
   // Scroll-Driven Animations with IntersectionObserver
   useEffect(() => {
-    if (!data) return;
 
     observerRef.current = new IntersectionObserver(
       (entries) => {
@@ -151,31 +121,6 @@ const Story: React.FC = () => {
       });
     }
   };
-
-  if (loadError) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-100 to-white flex items-center justify-center px-6">
-        <div className="text-center max-w-md">
-          <p className="text-gray-600 mb-4">{loadError}</p>
-          <button
-            type="button"
-            onClick={() => { setLoadError(null); setData(null); window.location.reload(); }}
-            className="px-6 py-3 bg-emerald-700 text-white rounded-full text-sm font-medium hover:bg-emerald-800"
-          >
-            새로고침
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (!data) {
-    return (
-      <div className="h-screen bg-gradient-to-b from-slate-100 to-white flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-600/20 border-t-emerald-600 animate-spin rounded-full" aria-hidden />
-      </div>
-    );
-  }
 
   return (
     <div className="w-full bg-white text-gray-900 selection:bg-emerald-900/20 relative overflow-hidden">
