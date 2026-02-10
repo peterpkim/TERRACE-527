@@ -34,6 +34,13 @@
 - 파비콘, JS/CSS 리소스는 문서와 동일하게 허용하는 것이 좋습니다.
 - Sitemap URL을 넣을 때는 **배포 후 실제 사이트 URL**을 사용하세요.
 
+### 파비콘 (Favicon) – 네이버 검색 가이드
+
+- **위치**: `public/favicon.png` (빌드 시 `dist/` 루트로 복사)
+- **마크업**: `index.html`의 `<head>` 내 `rel="shortcut icon"`, `rel="icon"`, `rel="apple-touch-icon"` 각 1개씩 사용
+- **규칙**: 정사각형, 최소 16px 이상 권장. 검색 결과에는 15×15px로 노출되므로 해당 크기에서 선명한지 확인
+- **절대 경로**: 네이버 가이드는 파비콘 `href`에 **절대 경로** 사용을 권장합니다. 배포 URL이 정해지면 `index.html`에서 `href="./favicon.png"`를 `href="https://실제도메인/favicon.png"` 형태로 바꾸면 검색 노출에 유리합니다.
+
 ### Sitemap 줄 추가 방법
 
 배포 URL이 정해지면 `public/robots.txt` 맨 아래에 한 줄 추가합니다.

@@ -359,8 +359,8 @@ const Home: React.FC = () => {
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
           <span className="inline-block py-1 px-3 mb-6 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-white text-[10px] tracking-[0.4em] font-bold uppercase animate-in fade-in slide-in-from-top-4 duration-1000">Premium Glamping & Stay</span>
           <h1 className="text-white serif tracking-tight leading-tight mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 flex flex-col items-center">
-            <span className="text-5xl md:text-7xl lg:text-8xl font-normal italic tracking-tighter mb-4">자연이 일상이 되는 순간</span>
-            <span className="text-lg md:text-2xl lg:text-3xl font-light opacity-90 tracking-[0.2em] max-w-2xl">일상에서 한 발 물러나 산정호수의 고요함과 여유를 누려보세요</span>
+            <span className="text-3xl md:text-4xl lg:text-5xl font-normal italic tracking-tighter mb-4">자연이 일상이<br />되는 순간</span>
+            <span className="text-sm md:text-base lg:text-lg font-light opacity-90 tracking-[0.15em] max-w-xl leading-relaxed">일상에서 한 발 물러나<br />산정호수의 고요함과 여유를 누려보세요</span>
           </h1>
           <Link to="/booking" className="inline-flex items-center gap-12 bg-white text-stone-900 px-12 py-5 rounded-full font-bold text-[11px] tracking-[0.4em] hover:bg-emerald-900 hover:text-white transition-all shadow-2xl uppercase group">RESERVE NOW <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" /></Link>
         </div>
