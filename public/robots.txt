@@ -1,12 +1,19 @@
-# robots.txt for Terrace 527 (Naver Webmaster Guide compliant)
-# Must be at site root; served as text/plain. 2xx response = rules applied.
+# Terrace 527 - Google & Naver 검색 수집 허용
+# 사이트 루트에 위치, text/plain으로 제공. 2xx 응답 필요.
 
+# 모든 검색 로봇: 전체 수집 허용 (차단 규칙 없음)
 User-agent: *
 Allow: /
 
-# Naver search robot (Yeti) - same allow rule
+# Google 검색 로봇: 수집 허용 (스니펫 생성 가능)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+# Naver 검색 로봇 (Yeti): 수집 허용
 User-agent: Yeti
 Allow: /
 
-# Sitemap: uncomment and set your live site URL (e.g. GitHub Pages or custom domain)
-# Sitemap: https://yourusername.github.io/REPO_NAME/sitemap.xml
+Sitemap: http://terrace527.com/sitemap.xml

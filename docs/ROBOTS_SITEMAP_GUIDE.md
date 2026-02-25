@@ -18,9 +18,12 @@
 
 ### 현재 설정
 
-- **User-agent: *** → 모든 검색 로봇
-- **Allow: /** → 전체 사이트 수집 허용
-- **User-agent: Yeti** → 네이버 검색 로봇에도 동일 규칙 적용
+- **User-agent: *** → **Allow: /** (전체 수집 허용, Disallow 없음)
+- **User-agent: Googlebot** → **Allow: /** (Google 검색·스니펫 허용)
+- **User-agent: Googlebot-Image** → **Allow: /**
+- **User-agent: Yeti** → **Allow: /** (네이버 검색 로봇 허용)
+
+**중요:** robots.txt에 **Disallow** 규칙이 없어야 Google/네이버가 페이지를 크롤링하고 스니펫을 만들 수 있습니다. 위 설정은 모두 허용만 사용합니다.
 
 ### 네이버 가이드 요약
 
@@ -128,3 +131,21 @@ Disallow: /private*/
 ```
 
 이 프로젝트는 현재 전체 공개를 전제로 하므로, 기본값은 `Allow: /` 만 두었습니다.
+
+---
+
+## 5. "robots.txt로 인해 정보를 수집할 수 없습니다" 해결
+
+Google/네이버 검색 결과에 위 메시지가 나오면 아래를 순서대로 확인하세요.
+
+1. **배포 후 robots.txt 위치**  
+   - GitHub Pages(프로젝트 사이트): `https://(사용자명).github.io/(저장소명)/robots.txt`  
+   - 브라우저에서 해당 URL을 열어 **200 OK**로 **텍스트 내용**이 보이는지 확인합니다.
+
+2. **차단 규칙이 없는지**  
+   - `Disallow: /` 가 있으면 **모든 페이지**가 차단됩니다.  
+   - 이 프로젝트의 `public/robots.txt`에는 **Disallow 없이 Allow: / 만** 사용합니다. 배포본이 동일한지 확인하세요.
+
+3. **수정 후 재배포**  
+   - `public/robots.txt`를 수정했다면 **다시 빌드·배포**한 뒤,  
+   - [Google Search Console](https://search.google.com/search-console) / [네이버 서치어드바이저](https://searchadvisor.naver.com/)에서 **robots.txt 다시 가져오기** 또는 **URL 검사·재색인 요청**을 하면 반영이 빨라집니다.
